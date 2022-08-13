@@ -1,7 +1,6 @@
-package lalalalz.demo.domain.repository;
+package lalalalz.demo.member.repository;
 
-import lalalalz.demo.domain.Member;
-import lombok.RequiredArgsConstructor;
+import lalalalz.demo.member.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

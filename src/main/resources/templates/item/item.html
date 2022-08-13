@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>게시물</h2>
+    </div>
+
+    <div class="row">
+        <div>
+            <label for="title">제목</label>
+            <div class="input-group">
+                <input type="text"
+                       id="title"
+                       th:field="${item.title}"
+                       th:errorclass="field-error"
+                       class="form-control"
+                       placeholder="Recipient's username"
+                       aria-describedby="basic-addon2" readonly>
+            </div>
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <div class="input-group">
+                <textarea id="content"
+                          th:field="${item.content}"
+                          th:errorclass="field-error"
+                          class="form-control col-sm-5" rows="10"
+                          placeholder="Recipient's username"
+                          aria-describedby="basic-addon2" readonly>
+                </textarea>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <button type="submit"
+                    th:onclick="|location.href='@{/item/edit}'|"
+                    class="w-100 btn btn-primary btn-lg">수정하기
+            </button>
+        </div>
+        <div class="col">
+            <button type="button"
+                    th:onclick="|location.href='@{/items/1}'|"
+                    class="w-100 btn btn-primary btn-lg">뒤로가기
+            </button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

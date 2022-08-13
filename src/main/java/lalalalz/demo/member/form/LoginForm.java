@@ -1,4 +1,4 @@
-package lalalalz.demo.login.form;
+package lalalalz.demo.member.form;
 
 import lombok.Data;
 

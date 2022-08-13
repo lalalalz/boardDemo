@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.twbsPagination.js"></script>
+
+    <!-- jQuery -->
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>게시판</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-start"
+                    onclick="location.href='login.html'"
+                    th:onclick="|location.href='@{/member/logout}'|"
+                    type="button">로그아웃</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/item/add}'|"
+                    type="button">게시물 등록</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일자</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${pageInfo.itemList}">
+                <td><a href="post.html" th:href="@{/item/{itemId}(itemId=${item.id})}" th:text="${item.id}">1</a></td>
+                <td><a href="post.html" th:href="@{|/item/${item.id}|}" th:text="${item.title}">Untitled</a></td>
+                <td th:text="${item.member.id}">unKnown</td>
+                <td th:text="${#temporals.format(item.createdTime, 'yy/MM/dd HH:mm')}">2022/01/01 00:00</td>
+                <td th:text="${item.views}">1</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="text-center">
+        <ul class="pagination" id="pagination">
+            <li th:if="${pageInfo.start > 10}">
+                <a th:href="@{/items/{pageNumber}(pageNumber=${pageInfo.start - 1})}"
+                   th:text="'<'"></a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(pageInfo.start, pageInfo.end)}">
+                <a th:href="@{/items/{pageNumber}(pageNumber=${page})}"
+                   th:text="${page}"></a>
+            </li>
+            <li th:if="${pageInfo.total > 10}">
+                <a th:href="@{/items/{pageNumber}(pageNumber=${pageInfo.end + 1})}"
+                   th:utext="'>'"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    window.onpageshow = function (event) {
+        if (window.performance.navigation.type == 2) {
+            location.href = document.referrer;
+        }
+    };
+</script>
+

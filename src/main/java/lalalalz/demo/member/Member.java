@@ -1,4 +1,4 @@
-package lalalalz.demo.domain;
+package lalalalz.demo.member;
 
 import lombok.Getter;
 import lombok.Setter;

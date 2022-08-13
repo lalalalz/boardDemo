@@ -1,6 +1,6 @@
-package lalalalz.demo.domain.repository;
+package lalalalz.demo.member.repository;
 
-import lalalalz.demo.domain.Member;
+import lalalalz.demo.member.Member;
 
 import java.util.List;
 

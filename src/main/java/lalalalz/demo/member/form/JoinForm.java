@@ -1,6 +1,6 @@
-package lalalalz.demo.login.form;
+package lalalalz.demo.member.form;
 
-import lalalalz.demo.domain.Member;
+import lalalalz.demo.member.Member;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
