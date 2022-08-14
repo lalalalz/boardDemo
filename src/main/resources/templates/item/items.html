@@ -87,7 +87,7 @@
                 <a th:href="@{/items/{pageNumber}(pageNumber=${page})}"
                    th:text="${page}"></a>
             </li>
-            <li th:if="${pageInfo.total > 10}">
+            <li th:if="${pageInfo.total != pageInfo.end}">
                 <a th:href="@{/items/{pageNumber}(pageNumber=${pageInfo.end + 1})}"
                    th:utext="'>'"></a>
             </li>

@@ -62,8 +62,8 @@
 
     <div class="row">
         <div class="col">
-            <button type="submit"
-                    th:onclick="|location.href='@{/item/edit}'|"
+            <button type="button"
+                    th:onclick="|location.href='@{/item/edit/{itemId}(itemId=${item.id})}'|"
                     class="w-100 btn btn-primary btn-lg">수정하기
             </button>
         </div>

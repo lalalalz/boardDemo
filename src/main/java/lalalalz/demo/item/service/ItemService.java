@@ -2,6 +2,7 @@ package lalalalz.demo.item.service;
 
 import lalalalz.demo.item.Item;
 import lalalalz.demo.item.form.AddForm;
+import lalalalz.demo.item.form.EditForm;
 import lalalalz.demo.item.form.PageInfo;
 import lalalalz.demo.item.repository.ItemRepository;
 import lalalalz.demo.member.Member;
@@ -53,6 +54,33 @@ public class ItemService {
         pageInfo.setStartAndEnd(pageNumber);
 
         return pageInfo;
+    }
+
+    public boolean canEdit(String memberId, Long itemId) {
+        Item findItem = itemRepository.findById(itemId)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if(findItem == null) return false;
+        return findItem.getMember()
+                .getId()
+                .equals(memberId);
+    }
+
+    @Transactional
+    public void updateItem(Long itemId, EditForm editForm) {
+        Item findItem = itemRepository.findById(itemId)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if (findItem == null) {
+            throw new IllegalArgumentException("존재하지 않는 게시물 입니다.");
+        }
+
+        findItem.setTitle(editForm.getTitle());
+        findItem.setContent(editForm.getContent());
     }
 }
 

@@ -2,6 +2,7 @@ package lalalalz.demo.item.controller;
 
 import lalalalz.demo.item.Item;
 import lalalalz.demo.item.form.AddForm;
+import lalalalz.demo.item.form.EditForm;
 import lalalalz.demo.item.form.PageInfo;
 import lalalalz.demo.item.repository.ItemRepository;
 import lalalalz.demo.item.service.ItemService;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,9 +27,6 @@ public class ItemController {
 
     @GetMapping("/items/{pageNumber}")
     public String items(@PathVariable Integer pageNumber, Model model) {
-//        List<Item> itemList = itemRepository.findTenItems(groupNumber);
-//        model.addAttribute("itemList", itemList);
-
         PageInfo pageInfo = itemService.generatedPageInfo(pageNumber);
         System.out.println("pageInfo = " + pageInfo);
         model.addAttribute("pageInfo", pageInfo);
@@ -47,6 +44,39 @@ public class ItemController {
 
         model.addAttribute("item", findItem);
         return "item/item";
+    }
+
+    @GetMapping("/item/edit/{itemId}")
+    public String editForm(@PathVariable Long itemId, Model model, HttpSession httpSession) {
+        String memberId = (String) httpSession.getAttribute("memberId");
+
+        if (!itemService.canEdit(memberId, itemId)) {
+            return "redirect:/item/{itemId}";
+        }
+
+        EditForm editForm = new EditForm();
+        itemService.findItem(itemId).ifPresent(item -> {
+            editForm.setItemId(item.getId());
+            editForm.setTitle(item.getTitle());
+            editForm.setContent(item.getContent());
+        });
+
+        model.addAttribute("editForm", editForm);
+        System.out.println("editForm");
+        return "/item/editForm";
+    }
+
+    @PostMapping("/item/edit/{itemId}")
+    public String edit(@PathVariable Long itemId,
+                       @Validated @ModelAttribute EditForm editForm,
+                       BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "item/edit";
+        }
+
+        itemService.updateItem(itemId, editForm);
+        return "redirect:/item/" + itemId;
     }
 
     @GetMapping("/item/add")

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>게시물 수정</h2>
+    </div>
+
+    <form action="/item/add" th:action th:object="${editForm}" method="post">
+        <div class="row">
+            <div>
+                <label for="title">제목</label>
+                <div class="input-group">
+                    <input type="text"
+                           id="title"
+                           th:field="*{title}"
+                           th:errorclass="field-error"
+                           class="form-control"
+                           placeholder="제목을 입력해 주세요 :)"
+                           aria-describedby="basic-addon2">
+                </div>
+                <div th:errors="*{title}" class="field-error"></div>
+            </div>
+            <div>
+                <label for="content">내용</label>
+                <div class="input-group">
+                    <textarea id="content"
+                              th:field="*{content}"
+                              th:errorclass="field-error"
+                              class="form-control col-sm-5" rows="10"
+                              placeholder="내용도 입력해주세요 >_<"
+                              aria-describedby="basic-addon2">
+                    </textarea>
+                </div>
+                <div th:errors="*{content}" class="field-error"></div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button type="submit"
+                        th:onclick="|location.href='@{/item/add}'|"
+                        class="w-100 btn btn-primary btn-lg">수정완료
+                </button>
+            </div>
+            <div class="col">
+                <button type="button"
+                        th:onclick="|location.href='@{/items/{itemId}(itemId=${editForm.itemId}}'|"
+                        class="w-100 btn btn-primary btn-lg">뒤로가기
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
