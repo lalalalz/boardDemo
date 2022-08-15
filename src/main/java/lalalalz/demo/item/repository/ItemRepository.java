@@ -1,7 +1,6 @@
 package lalalalz.demo.item.repository;
 
 import lalalalz.demo.item.Item;
-
 import java.util.List;
 
 public interface ItemRepository {
